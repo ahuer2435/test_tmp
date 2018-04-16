@@ -36,29 +36,76 @@ static RaspMsgSendTypeDef raspmsgsend;
 #define SIGSET    1
 #define SIGUNSET  0
 
+typedef enum{
+    min_state,
+    IDLE,
+    POWON,
+    RUNNING,
+    POWOFF,
+    ERROR,
+    max_state,
+}SYS_STATE;
+
+typedef enum{
+    MOTOIDLE = max_state,
+    MOTOINITIAL,//pown on
+    MOTOMODESET,
+    MOTOSETPARAM,
+    MOTOWAITSTARTSUCCESS,
+    MOTOSTART,
+    MOTOSTOP,   //emg stop
+    MOTORUNNING,
+    MOTORELAXMODE,
+
+    MOTOPOWOFF,
+    MOTOERROR,
+    motor_max_state,
+}MOTOR_STATE;
+
+typedef enum{
+    GAITIDLE = motor_max_state,
+    GAITINITIAL,
+    GAITSTART,
+    GAITSTOP,   //emg stop
+    GAITRUNNING,
+    GAITPOWOFF,
+    gait_max_state,
+}GAIT_STATE;
+
+
+typedef enum{
+    MCUIDLE = gait_max_state,
+    MCUINITIAL,
+    MCURUN,
+    MCUSTOP,
+    MCUPOWOFF,
+    MCUERROR,
+    mcu_max_state,
+}MCU_STATE;
+
+
+typedef enum
+{
+  ER_MOTORCRT = mcu_max_state, //mcu
+  ER_MOTOCNCT,
+  ER_MOTOINI ,
+  ER_GAIT1 ,
+  ER_GAIT2 ,
+  er_max_state,
+} ErrorMsgTypeDef;
+
+typedef enum{
+    FINDHEAD = er_max_state,
+    GETMSG,
+    FINDTAIL,
+    CHECKDATA,
+    PROCESSDATA,
+    tty_max_state,
+}TTY_STATE;
+
+
 ros::Publisher pub_msg1;
 
-static void serial1_callback(const serial_driver::serial_data& global_input)
-{
-    int nrd;
-    raspmsgsend.counter++;
-    //raspmsgsend.raspstatus = evt_selfcheck_ok;//电机初始化，abc 位置检测后再发出
-    raspmsgsend.s1++;
-    raspmsgsend.s3++;
-
-    if( (motorcalibrationflag == SIGSET) && (gaitcalibrationflag == SIGSET) ){
-        raspmsgsend.raspstatus = evt_selfcheck_ok;
-    }
-
-    raspmsgsend.check = (raspmsgsend.counter)^(raspmsgsend.raspstatus)^(raspmsgsend.s1)^(raspmsgsend.s2)^(raspmsgsend.s3);
-
-    printf("head nrd = %d\n",nrd);
-    nrd =write(fd,&raspmsgsend,sizeof(raspmsgsend));
-    printf("tail nrd = %d\n",nrd);
-    if( nrd == sizeof(raspmsgsend) ){
-        // printf("tty send sucess!:%d\n",i++);
-    }
-}
 
 
 
@@ -113,53 +160,46 @@ static int serial_init()
 }
 
 
-
-static void serial_msg_set()
-{
-    raspmsgsend.header = 0x5953;
-    raspmsgsend.tail   = 0xfd;
-}
-
-
-static void thread_of_mcu_recv(void ){
+void thread_of_mcu_recv(void ){
 
     printf("Start Recving msg from mcu...\n");
 
     serial_driver::serial_data serial_data;
-    static int i,j,m,n;
     int nrd;
-    char rcvbuff;
-    char pre,now;
-
-    char cur_pow,pre_pow;
-    char cur_stop,pre_stop;
 
     static McuMsgSendTypeDef mcumsgsend;
+
+    TTY_STATE current_state = FINDHEAD;
 
     for(;;){
             // printf("2.GETMSG\n");
             nrd = read(fd,&mcumsgsend,sizeof(mcumsgsend));
             if(nrd > 0){
                 current_state = FINDTAIL;
-                serial_data.data = mcumsgsend.
+                //serial_data.data = mcumsgsend
 
             }
-            else
+            else{
                 current_state = FINDHEAD;
             }
     }
-    return -1;
+    return;
 }
 
 
 int main(int argc, char **argv)
 {
+    printf("1\n");
     ros::init(argc, argv, "serial1_receive_node");
     ros::NodeHandle nh;
 
+    printf("a\n");
     serial_init();
+    printf("b\n");
     boost::thread reveive_loop(&thread_of_mcu_recv);
+    printf("c\n");
     pub_msg1 = nh.advertise<serial_driver::serial_data>("driver/from_serial1",10,true);
+    printf("d\n");
 
     ros::spin();
 
