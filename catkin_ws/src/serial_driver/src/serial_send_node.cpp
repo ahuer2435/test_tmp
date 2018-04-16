@@ -58,8 +58,7 @@ static void serial1_callback(const serial_driver::serial_data& global_input)
     }
 }
 
-static void serial2_callback(const serial_driver::serial_data& global_input)
-{}
+
 
 static int serial_init()
 {
