@@ -1,6 +1,4 @@
 #include <ros/ros.h>
-#include <std_msgs/String.h>
-#include <std_msgs/Int8.h>
 #include "serial_driver/serial_data.h"
 #include<fstream>
 
@@ -36,8 +34,6 @@ static RaspMsgSendTypeDef raspmsgsend;
 #define SIGSET    1
 #define SIGUNSET  0
 
-ros::Publisher pub_msg1;
-ros::Publisher pub_msg2;
 
 
 static void serial1_callback(const serial_driver::serial_data& global_input)
@@ -133,11 +129,6 @@ int main(int argc, char **argv)
     serial_msg_set();
 
     ros::Subscriber sub_gps = nh.subscribe("driver/topic1", 10, serial1_callback);
-    ros::Subscriber sub_gps2 = nh.subscribe("driver/topic2", 10, serial2_callback);
-
-
-    pub_msg1 = nh.advertise<std_msgs::Int8>("driver/send_topic1",5,true);
-    pub_msg2 = nh.advertise<std_msgs::String>("driver/send_topic2",5,true);
 
     ros::spin();
 
