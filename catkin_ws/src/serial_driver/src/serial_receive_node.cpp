@@ -1,18 +1,14 @@
 #include <ros/ros.h>
 #include "serial_driver/serial_data.h"
+#include "boost/thread.hpp"
+
 #include<fstream>
 
 #include <stdio.h>          //puts
 #include <string.h>         //strlen
 #include <stdlib.h>
 #include <unistd.h>         /*Unix 标准函数定义*/
-#include <sys/socket.h>
-#include <arpa/inet.h>      //inet_addr
-#include <unistd.h>         //write
-#include <pthread.h>        //for threading , link with lpthread
 #include <sys/time.h>
-#include <pthread.h>
-
 
 #include <assert.h>
 
@@ -24,8 +20,6 @@
 
 #include "mcumsg_rasp.h"
 #include "thread_of_lcd.h"
-
-#include "boost/thread.hpp"
 
 int fd;
 static int gaitcalibrationflag ;
@@ -41,7 +35,7 @@ typedef enum{
     IDLE,
     POWON,
     RUNNING,
-    POWOFF,
+    POWOFF,serial_data
     ERROR,
     max_state,
 }SYS_STATE;
@@ -106,12 +100,9 @@ typedef enum{
 
 ros::Publisher pub_msg1;
 
-
-
-
 static int serial_init()
 {
-    fd = open("/dev/ttyUSB1",O_RDWR );
+    fd = open("/dev/ttyUSB0",O_RDWR );
     if(-1 == fd){
         close(fd);
         printf("UBUNTU open /dev/ttyUSB0 error!\n");
@@ -149,7 +140,7 @@ static int serial_init()
     opt.c_cc[VMIN] = 0;
 
     tcflush(fd, TCIOFLUSH);
-
+serial_data
     printf("mcu_recv ttyUSB0 configure complete\n");
 
     if(tcsetattr(fd, TCSANOW, &opt) != 0)
@@ -160,7 +151,7 @@ static int serial_init()
 }
 
 
-void thread_of_mcu_recv(void ){
+void thread_of_mcu_recv(void){
 
     printf("Start Recving msg from mcu...\n");
 
@@ -172,7 +163,7 @@ void thread_of_mcu_recv(void ){
     TTY_STATE current_state = FINDHEAD;
 
     for(;;){
-            // printf("2.GETMSG\n");
+            printf("2.GETMSG\n");
             nrd = read(fd,&mcumsgsend,sizeof(mcumsgsend));
             if(nrd > 0){
                 current_state = FINDTAIL;
@@ -182,28 +173,26 @@ void thread_of_mcu_recv(void ){
             else{
                 current_state = FINDHEAD;
             }
+            //serial_data.id =
+            pub_msg1.publish(serial_data);
     }
     return;
 }
 
+void receive_loop_msg(void)
+{
+    thread_of_mcu_recv();
+}
 
 int main(int argc, char **argv)
 {
-    printf("1\n");
     ros::init(argc, argv, "serial1_receive_node");
     ros::NodeHandle nh;
 
-    printf("a\n");
-    serial_init();
-    printf("b\n");
-    boost::thread reveive_loop(&thread_of_mcu_recv);
-    printf("c\n");
     pub_msg1 = nh.advertise<serial_driver::serial_data>("driver/from_serial1",10,true);
-    printf("d\n");
+    boost::thread reveive_loop(&receive_loop_msg);
 
     ros::spin();
-
-    close(fd);
     return 0;
 }
 

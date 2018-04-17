@@ -38,11 +38,15 @@ static RaspMsgSendTypeDef raspmsgsend;
 
 static void serial1_callback(const serial_driver::serial_data& global_input)
 {
+    string id;
+    float data;
     int nrd;
     raspmsgsend.counter++;
     //raspmsgsend.raspstatus = evt_selfcheck_ok;//电机初始化，abc 位置检测后再发出
     raspmsgsend.s1++;
     raspmsgsend.s3++;
+    id = global_input.id;
+    data = global_input.data;
 
     if( (motorcalibrationflag == SIGSET) && (gaitcalibrationflag == SIGSET) ){
         raspmsgsend.raspstatus = evt_selfcheck_ok;
@@ -62,7 +66,7 @@ static void serial1_callback(const serial_driver::serial_data& global_input)
 
 static int serial_init()
 {
-    fd = open("/dev/ttyUSB1",O_RDWR );
+    fd = open("/dev/ttyUSB0",O_RDWR );
     if(-1 == fd){
         close(fd);
         printf("UBUNTU open /dev/ttyUSB0 error!\n");
