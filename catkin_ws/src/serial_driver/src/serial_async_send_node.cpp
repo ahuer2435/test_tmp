@@ -140,9 +140,9 @@ int main(int argc, char **argv)
     serial_init();
     serial_msg_set();
 
-    ros::Subscriber sub_gps1 = nh.subscribe("driver/topic1", 10, serial1_callback);
-    ros::Subscriber sub_gps2 = nh.subscribe("driver/topic2", 10, serial2_callback);
-    ros::Subscriber sub_gps3 = nh.subscribe("driver/topic3", 10, serial3_callback);
+    ros::Subscriber sub_msg1 = nh.subscribe("driver/topic1", 10, serial1_callback);
+    ros::Subscriber sub_msg2 = nh.subscribe("driver/topic2", 10, serial2_callback);
+    ros::Subscriber sub_msg3 = nh.subscribe("driver/topic3", 10, serial3_callback);
 
     ros::spin();
 
