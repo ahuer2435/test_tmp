@@ -150,6 +150,8 @@ include_directories(
 add_executable(serial_send_node src/serial_send_node.cpp)
 target_link_libraries(serial_send_node  ${catkin_LIBRARIES} )
 
+add_executable(serial_async_send_node src/serial_async_send_node.cpp)
+target_link_libraries(serial_async_send_node  ${catkin_LIBRARIES} )
 
 add_executable(serial_receive_node src/serial_receive_node.cpp)
 target_link_libraries(serial_receive_node  ${catkin_LIBRARIES} )
