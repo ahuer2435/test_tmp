@@ -164,6 +164,9 @@ target_link_libraries(serial_receive_node  ${catkin_LIBRARIES} )
 add_executable(serial_receive_multi_topic_node src/serial_receive_multi_topic_node.cpp)
 target_link_libraries(serial_receive_multi_topic_node  ${catkin_LIBRARIES} )
 
+add_executable(ros_timer_mode src/ros_timer_mode.cpp)
+target_link_libraries(ros_timer_mode  ${catkin_LIBRARIES} )
+
 #############
 ## Install ##
 #############
