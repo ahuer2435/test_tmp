@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  message_filters
   message_generation
 )
 
@@ -51,6 +52,7 @@ find_package(catkin REQUIRED COMPONENTS
  add_message_files(
    FILES
    serial_data.msg
+   serial_data_stamp.msg
 #   Message2.msg
  )
 
@@ -152,6 +154,9 @@ target_link_libraries(serial_send_node  ${catkin_LIBRARIES} )
 
 add_executable(serial_async_send_node src/serial_async_send_node.cpp)
 target_link_libraries(serial_async_send_node  ${catkin_LIBRARIES} )
+
+add_executable(serial_sync_send_node src/serial_sync_send_node.cpp)
+target_link_libraries(serial_sync_send_node  ${catkin_LIBRARIES} )
 
 add_executable(serial_receive_node src/serial_receive_node.cpp)
 target_link_libraries(serial_receive_node  ${catkin_LIBRARIES} )
