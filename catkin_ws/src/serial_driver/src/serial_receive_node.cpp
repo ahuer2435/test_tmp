@@ -35,7 +35,7 @@ typedef enum{
     IDLE,
     POWON,
     RUNNING,
-    POWOFF,serial_data
+    POWOFF,
     ERROR,
     max_state,
 }SYS_STATE;
@@ -140,7 +140,7 @@ static int serial_init()
     opt.c_cc[VMIN] = 0;
 
     tcflush(fd, TCIOFLUSH);
-serial_data
+
     printf("mcu_recv ttyUSB0 configure complete\n");
 
     if(tcsetattr(fd, TCSANOW, &opt) != 0)

@@ -38,7 +38,7 @@ static RaspMsgSendTypeDef raspmsgsend;
 
 static void serial1_callback(const serial_driver::serial_data& global_input)
 {
-    string id;
+    std::string id;
     float data;
     int nrd;
     raspmsgsend.counter++;
