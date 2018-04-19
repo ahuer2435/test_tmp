@@ -149,13 +149,13 @@ include_directories(
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-add_executable(serial_send_node src/serial_send_node.cpp)
+add_executable(serial_send_node src/serial_send_node.cpp src/serial_init.c)
 target_link_libraries(serial_send_node  ${catkin_LIBRARIES} )
 
-add_executable(serial_async_send_node src/serial_async_send_node.cpp)
+add_executable(serial_async_send_node src/serial_async_send_node.cpp src/serial_init.c)
 target_link_libraries(serial_async_send_node  ${catkin_LIBRARIES} )
 
-add_executable(serial_sync_send_node src/serial_sync_send_node.cpp)
+add_executable(serial_sync_send_node src/serial_sync_send_node.cpp src/serial_init.c)
 target_link_libraries(serial_sync_send_node  ${catkin_LIBRARIES} )
 
 add_executable(serial_receive_node src/serial_receive_node.cpp)
