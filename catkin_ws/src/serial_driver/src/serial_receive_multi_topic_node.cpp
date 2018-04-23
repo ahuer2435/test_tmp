@@ -55,7 +55,7 @@ void receive_loop_msg(void)
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "serial_receive_multi_topic_node");
+    ros::init(argc, argv, "serial1_receive_multi_topic_node");
     ros::NodeHandle nh;
 
     fd = serial_init();
