@@ -108,7 +108,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES serial_driver
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+#   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
@@ -150,21 +150,27 @@ include_directories(
 
 ## Specify libraries to link a library or executable target against
 add_executable(serial_send_node src/serial_send_node.cpp src/serial_init.c)
+add_dependencies(serial_send_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(serial_send_node  ${catkin_LIBRARIES} )
 
 add_executable(serial_async_send_node src/serial_async_send_node.cpp src/serial_init.c)
+add_dependencies(serial_async_send_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(serial_async_send_node  ${catkin_LIBRARIES} )
 
 add_executable(serial_sync_send_node src/serial_sync_send_node.cpp src/serial_init.c)
+add_dependencies(serial_sync_send_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(serial_sync_send_node  ${catkin_LIBRARIES} )
 
 add_executable(serial_receive_node src/serial_receive_node.cpp src/serial_init.c)
+add_dependencies(serial_receive_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(serial_receive_node  ${catkin_LIBRARIES} )
 
 add_executable(serial_receive_multi_topic_node src/serial_receive_multi_topic_node.cpp src/serial_init.c)
+add_dependencies(serial_receive_multi_topic_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(serial_receive_multi_topic_node  ${catkin_LIBRARIES} )
 
 add_executable(ros_timer_mode src/ros_timer_mode.cpp)
+add_dependencies(ros_timer_mode ${catkin_EXPORTED_TARGETS})
 target_link_libraries(ros_timer_mode  ${catkin_LIBRARIES} )
 
 #############
