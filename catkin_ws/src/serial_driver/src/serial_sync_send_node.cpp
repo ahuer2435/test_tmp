@@ -16,7 +16,7 @@ static RaspMsgSendTypeDef raspmsgsend;
 
 typedef boost::shared_ptr< ::serial_driver::serial_data_stamp const> SerialDataStampedConstPtr;
 
-void callback(const SerialDataStampedConstPtr &global_input1, const SerialDataStampedConstPtr &global_input2,const SerialDataStampedConstPtr &global_input3)
+void callback(const SerialDataStampedConstPtr &serial_data1, const SerialDataStampedConstPtr &serial_data2,const SerialDataStampedConstPtr &serial_data3)
 {
     std::string id;
     float data;
@@ -25,8 +25,8 @@ void callback(const SerialDataStampedConstPtr &global_input1, const SerialDataSt
     //raspmsgsend.raspstatus = evt_selfcheck_ok;//电机初始化，abc 位置检测后再发出
     raspmsgsend.s1++;
     raspmsgsend.s3++;
-    id = global_input1->id;
-    data = global_input2->data;
+    id = serial_data1->id;
+    data = serial_data2->data;
 
     if( (motorcalibrationflag == SIGSET) && (gaitcalibrationflag == SIGSET) ){
         raspmsgsend.raspstatus = evt_selfcheck_ok;

@@ -9,7 +9,7 @@ static int motorcalibrationflag ;
 RaspMsgSendTypeDef raspmsgsend;
 
 
-static void serial1_callback(const serial_driver::serial_data& global_input)
+static void serial1_callback(const serial_driver::serial_data& serial_input)
 {
     std::string id;
     float data;
@@ -18,8 +18,8 @@ static void serial1_callback(const serial_driver::serial_data& global_input)
     //raspmsgsend.raspstatus = evt_selfcheck_ok;//电机初始化，abc 位置检测后再发出
     raspmsgsend.s1++;
     raspmsgsend.s3++;
-    id = global_input.id;
-    data = global_input.data;
+    id = serial_input.id;
+    data = serial_input.data;
 
     if( (motorcalibrationflag == SIGSET) && (gaitcalibrationflag == SIGSET) ){
         raspmsgsend.raspstatus = evt_selfcheck_ok;

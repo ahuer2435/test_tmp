@@ -5,20 +5,20 @@
 
 ros::Publisher pub_msg1;
 
-static void callback1(const serial_driver::serial_data& global_input)
+static void callback1(const serial_driver::serial_data& serial_input)
 {
-    //setting raspmsgsend by global_input
+    //setting raspmsgsend by serial_input
 }
 
-static void callback2(const serial_driver::serial_data& global_input)
+static void callback2(const serial_driver::serial_data& serial_input)
 {
-    //setting raspmsgsend by global_input
+    //setting raspmsgsend by serial_input
 }
 
 
-static void callback3(const serial_driver::serial_data& global_input)
+static void callback3(const serial_driver::serial_data& serial_input)
 {
-    //setting raspmsgsend by global_input
+    //setting raspmsgsend by serial_input
 }
 
 void timer_callback(const ros::TimerEvent&)
