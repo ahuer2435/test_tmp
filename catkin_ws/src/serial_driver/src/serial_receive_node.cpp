@@ -26,7 +26,6 @@ void thread_of_mcu_recv(void){
     TTY_STATE current_state = FINDHEAD;
 
     for(;;){
-            printf("2.GETMSG\n");
             nrd = read(fd,&mcumsgsend,sizeof(mcumsgsend));
             if(nrd > 0){
                 current_state = FINDTAIL;
