@@ -37,10 +37,10 @@ int main(int argc, char **argv)
 
     const double_t pub_freq = 10.0;
 
-    ros::Subscriber sub_msg1 = nh.subscribe("driver/from_serial1",10,callback1);
-    ros::Subscriber sub_msg2 = nh.subscribe("driver/from_serial2",10,callback2);
-    ros::Subscriber sub_msg3 = nh.subscribe("driver/from_serial3",10,callback3);
-    pub_msg1 = nh.advertise<serial_driver::serial_data>("driver/from_serial4",10,true);
+    ros::Subscriber sub_msg1 = nh.subscribe("driver/from_topic1",10,callback1);
+    ros::Subscriber sub_msg2 = nh.subscribe("driver/from_topic2",10,callback2);
+    ros::Subscriber sub_msg3 = nh.subscribe("driver/from_topic3",10,callback3);
+    pub_msg1 = nh.advertise<serial_driver::serial_data>("driver/from_topic4",10,true);
     ros::Timer timer1 = nh.createTimer(ros::Duration(1.0/pub_freq), timer_callback);
 
     ros::spin();

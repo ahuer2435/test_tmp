@@ -59,9 +59,9 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
 
     fd = serial_init();
-    pub_msg1 = nh.advertise<serial_driver::serial_data>("driver/from_serial1",10,true);
-    pub_msg2 = nh.advertise<serial_driver::serial_data>("driver/from_serial2",10,true);
-    pub_msg3 = nh.advertise<serial_driver::serial_data>("driver/from_serial3",10,true);
+    pub_msg1 = nh.advertise<serial_driver::serial_data>("driver/from_topic1",10,true);
+    pub_msg2 = nh.advertise<serial_driver::serial_data>("driver/from_topic2",10,true);
+    pub_msg3 = nh.advertise<serial_driver::serial_data>("driver/from_topic3",10,true);
     boost::thread reveive_loop(&receive_loop_msg);
 
     ros::spin();

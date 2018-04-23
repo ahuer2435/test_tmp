@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
     fd = serial_init();
 
-    pub_msg1 = nh.advertise<serial_driver::serial_data>("driver/from_serial1",10,true);
+    pub_msg1 = nh.advertise<serial_driver::serial_data>("driver/from_topic1",10,true);
     boost::thread reveive_loop(&receive_loop_msg);
 
     ros::spin();
