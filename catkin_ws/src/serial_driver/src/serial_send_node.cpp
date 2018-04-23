@@ -27,9 +27,7 @@ static void serial1_callback(const serial_driver::serial_data& global_input)
 
     raspmsgsend.check = (raspmsgsend.counter)^(raspmsgsend.raspstatus)^(raspmsgsend.s1)^(raspmsgsend.s2)^(raspmsgsend.s3);
 
-    printf("head nrd = %d\n",nrd);
     nrd =write(fd,&raspmsgsend,sizeof(raspmsgsend));
-    printf("tail nrd = %d\n",nrd);
     if( nrd == sizeof(raspmsgsend) ){
         // printf("tty send sucess!:%d\n",i++);
     }

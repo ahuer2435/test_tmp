@@ -34,9 +34,7 @@ void callback(const SerialDataStampedConstPtr &global_input1, const SerialDataSt
 
     raspmsgsend.check = (raspmsgsend.counter)^(raspmsgsend.raspstatus)^(raspmsgsend.s1)^(raspmsgsend.s2)^(raspmsgsend.s3);
 
-    printf("head nrd = %d\n",nrd);
     nrd =write(fd,&raspmsgsend,sizeof(raspmsgsend));
-    printf("tail nrd = %d\n",nrd);
     if( nrd == sizeof(raspmsgsend) ){
         // printf("tty send sucess!:%d\n",i++);
     }
