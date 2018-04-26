@@ -4,6 +4,11 @@
 目前在树莓派上，仅支持源码方式安装ros。安装之前需要确认操作系统版本是jessie，以下介绍安装ros indigo版本的步骤。
 
 ## 安装准备：
+设置语言：
+```
+echo "export LC_ALL=C" >> ~/.bashrc
+```
+
 设置系统源为国内的源，更新速度更快。
 ```
 $ sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak  #备份
@@ -109,5 +114,5 @@ $ echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
 $ roscore
 ```
 ## 参考：
-https://www.ncnynl.com/archives/201612/1146.html
-http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Indigo%20on%20Raspberry%20Pi
+* https://www.ncnynl.com/archives/201612/1146.html
+* http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Indigo%20on%20Raspberry%20Pi
