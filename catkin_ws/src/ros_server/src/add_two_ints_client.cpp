@@ -11,13 +11,20 @@ int main(int argc, char **argv)
     return 1;
   }
 
+  double timeout_;
   ros::NodeHandle n;
+  ros::NodeHandle nh_priv("~");
+
+  nh_priv.param("timeout", timeout_, 0.0);
+
   ros::ServiceClient client = n.serviceClient<ros_server::AddTwoInts>("add_two_ints");
   ros_server::AddTwoInts srv;
   srv.request.a = atoll(argv[1]);
   srv.request.b = atoll(argv[2]);
 
-  if(client.waitForExistence(ros::Duration(5)) == true){
+  ROS_INFO("timeout_:%lf", timeout_);
+
+  if(client.waitForExistence(ros::Duration(timeout_)) == true){
       ROS_INFO("server start.");
   }else{
       ROS_INFO("server fail.");
