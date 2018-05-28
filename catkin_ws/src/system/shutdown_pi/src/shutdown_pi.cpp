@@ -22,7 +22,7 @@ int host_shutdown_func(void)
         char buf[100] = "";
         if (home)
         {
-                sprintf(buf, "%s/workspace/test_tmp/catkin_ws/src/system/shutdown_pi/src/shutdown_cmd", home);
+                sprintf(buf, "%s/workspaces/test_tmp/catkin_ws/src/system/shutdown_pi/src/shutdown_cmd", home);
         }
         if(execl(buf,"shutdown_cmd",(char *)0) < 0)
         {
@@ -55,7 +55,7 @@ void PowerCallback(const std_msgs::Int16 &power_ctl)
                 power_off = 1;
                 power_off_info.data = 1;
                 PubPowerOff.publish(power_off_info);
-                //sleep(3);
+                sleep(3);
                 //system("echo `date` > /var/log/ros_log/power_off_cmd.txt");
                 host_shutdown_func();
             }
@@ -65,6 +65,8 @@ void PowerCallback(const std_msgs::Int16 &power_ctl)
             PubPowerOff.publish(power_off_info);
             break;
         default:
+            power_off_info.data = 0xFFFF;
+            PubPowerOff.publish(power_off_info);
             ROS_ERROR("power_cmd value:%d is invalid.", power_off_info.data);
 
     }
