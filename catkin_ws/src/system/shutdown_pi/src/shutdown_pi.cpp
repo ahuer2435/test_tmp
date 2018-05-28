@@ -22,7 +22,7 @@ int host_shutdown_func(void)
         char buf[100] = "";
         if (home)
         {
-                sprintf(buf, "%s/workspace/test_tmp/catkin_ws/src/system/shutdown_pi/srcs/shutdown_cmd", home);
+                sprintf(buf, "%s/workspace/test_tmp/catkin_ws/src/system/shutdown_pi/src/shutdown_cmd", home);
         }
         if(execl(buf,"shutdown_cmd",(char *)0) < 0)
         {
